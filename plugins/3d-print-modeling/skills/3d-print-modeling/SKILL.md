@@ -1,81 +1,100 @@
 ---
 name: 3d-print-modeling
-description: Rules for modeling parts that will be FDM 3D printed, especially threaded joints, mating parts, and print-test workflow. Use when designing, modifying, or exporting any CAD model meant for printing.
+description: Design-for-FDM rules and export workflow for any CAD model meant to be 3D printed. Use when modeling, modifying, or exporting parts for printing: wall thickness, overhangs, orientation, threads and press fits, tolerances, plate export to export/, and test coupons in export/tests/.
 ---
 
-# 3D-print modeling rules
+# 3D-print modeling (FDM)
 
-Learned on a funnel project (threaded union ring and extension tubes, FDM printer). The rules are CAD-agnostic. Items marked **verified** were confirmed by a physical print; **assumed** were not.
+Apply this whenever you design, change, or export a part that will be printed. Defaults assume FDM and a 0.4 mm nozzle. Numbers from published guides are starting points: printers differ, so confirm anything critical with a print test. Items marked **verified** were confirmed by a physical print on the project this skill came from.
 
-## 1. Threads and mating parts
+## 1. Design for FDM
 
-- Never model male and female threads at the same nominal size. Both parts printed at M60x3 gave zero flank clearance and the ring would not screw on. **verified**
-- Put the tolerance on the female part. Leave the male part at its nominal size so one change fixes one part and the other part stays reusable.
-- Working starting point: female thread major = male nominal + 1 mm (M60x3 male, M61x3 female; M30x2 male, M31x2 female). This worked in a physical thread test. **verified**
-- Drive the clearance from a parameter (`thread_d + 1 mm`), not a typed number, so one edit retunes it.
-- CAD may auto-narrow the female bore to the thread's minor diameter and report a warning (for example "narrowed the 61 mm hole to 57.75 mm"). That is expected. Set the bore sketch dimension to the same enlarged size so the thread cuts into material.
-- Where a thread joint must also seal, a small extra gap is acceptable: wrap the male thread with PTFE (teflon) tape. On this project the tape made the +1 mm clearance fine.
-- Radial clearance numbers are not enough. Check flank clearance as well, because the flanks are what jam.
+### Walls and small features
+- Minimum wall: about 0.8 mm (2x nozzle). Use 1.2 to 2.0 mm for structural parts. Guides range from 2x to 4x extrusion width.
+- Keep wall thickness uniform to reduce warping.
+- Smallest reliable pin or column: about 1 to 2 mm diameter. Quoted minimum printable features range from 0.4 mm to about 1.1 mm, so avoid detail near the low end.
+- Text: use bold, and place it on the top or bottom build plane.
 
-## 2. Test before reprinting the full part
-
-- A uniform scale-down is not a valid fit test. Pitch and clearance scale with the part, so the result does not predict the real fit.
-- Print thread coupons at full scale instead: a short slice (about 8 to 12 mm) of the male thread and of the female thread. They print in a fraction of the time and answer the real question.
-- Build coupons by copying the bodies, intersecting each copy with a cylinder along the thread axis, then rotating the slice so the axis is vertical. Restore the model afterwards so no test bodies are left in it.
-- Lay slices with the thread axis vertical (Z) so layers run perpendicular to the thread.
-
-## 3. Verify in CAD, but do not trust CAD alone
-
-- Run an interference check on the assembled position and rotate one part about its thread axis in steps (30 degrees worked) to find the best phase. Overlap should reach near zero at some phase.
-- On this project the CAD check never reached zero overlap (best 48 mm3), yet the printed thread coupons fit. Treat CAD overlap as a warning to investigate, not as proof of failure, and treat the physical coupon as the deciding test.
-- Do not state "this fits" or call a clearance "typical" without a check. Say what was and was not verified.
-- Check axial travel too: the ring must be able to seat fully against its stop.
-
-## 4. General FDM modeling reminders (assumed, check against your printer)
-
-- Printed holes come out smaller and printed pegs come out larger. Add clearance to the part that receives.
-- Keep features that must be printed without supports at a printable angle, and orient parts to avoid supports inside threads.
-- Plan print orientation while modeling. Place threads with the axis vertical where you can.
-
-## 4b. Design-for-FDM rules from published guides
-
-Numbers below come from vendor and service-bureau guides and vary by printer. They are starting points, not guarantees. Defaults assume a 0.4 mm nozzle.
-
-**Walls and features**
-- Minimum wall: about 0.8 mm (2x nozzle). Use 1.2 to 2.0 mm for structural parts. Keep wall thickness uniform to reduce warping.
-- Smallest reliable pin or column: about 1 to 2 mm diameter. Minimum printable feature estimates range from 0.4 to about 1.1 mm, so avoid detail near the low end.
-
-**Overhangs and bridges**
-- Keep overhangs at 45 degrees or less from vertical so they print without supports. Steeper angles can work on some printers, so calibrate with a test plate.
+### Overhangs and bridges
+- Keep overhangs at 45 degrees or less from vertical so they print without supports. Some printers manage steeper angles, so calibrate with a test plate.
 - Bridges up to about 10 mm usually print without supports.
-- Use teardrop or diamond shapes for horizontal holes instead of round holes, so the top does not sag.
+- Use teardrop or diamond shapes for horizontal holes, not round holes, so the top does not sag.
 - Add a chamfer or fillet to surfaces steeper than 45 degrees to remove the need for support.
 
-**Bed contact and orientation**
-- Put the largest flat face on the bed and orient the part so overhangs and supports are minimal.
-- Parts are weakest between layers, so orient so that loads run along layers, not across them.
-- Add a small chamfer (about 0.5 mm at 45 degrees) to bottom edges and the bottom of holes to counter elephant foot. A slicer elephant-foot compensation of about 0.2 mm is also common.
-- Fillets on the first layers can warp. Prefer a chamfer on the bed side.
+### Orientation and bed contact
+- Put the largest flat face on the bed. Orient the part to minimize overhangs and supports.
+- Parts are weakest between layers. Orient so loads run along the layers, not across them.
+- Add a small chamfer (about 0.5 mm at 45 degrees) to bottom edges and to the bottom of holes to counter elephant foot. Slicer elephant-foot compensation of about 0.2 mm is also common.
+- Fillets on the first layers can warp. Prefer a chamfer on the bed side. Fillets elsewhere are fine for stress relief but optional in FDM.
 
-**Threads**
-- Printed threads work best with rounded roots and crests, not sharp ones. Large pitches (here M30x2 and M60x3) print better than fine ones.
-- A tapered or "dog point" lead-in of at least 0.8 mm helps the thread start.
-- Printed holes smaller than about 3 mm for threads are unreliable.
+### Holes
+- Printed holes come out slightly small. Add clearance to the receiving hole and confirm with a test coupon (section 3). No source gives a universal value, so record the value that works on the user's printer.
 
-**Holes**
-- Printed holes come out slightly small. Compensate by adding clearance to the receiving hole and test with a coupon. No source gave a universal value, so record the value that works on your printer.
+### Threads
+- Printed threads work best with rounded roots and crests, not sharp ones.
+- Large pitches print better than fine ones. M30x2 and M60x3 worked well. **verified**
+- A lead-in (tapered or "dog point") of at least 0.8 mm helps the thread start.
+- Threaded holes smaller than about 3 mm are unreliable.
+- Orient threads with the axis vertical (Z) so layers run perpendicular to the thread.
 
 Sources: [Onshape: top 5 design tips](https://www.onshape.com/en/resource-center/tech-tips/top-5-design-tips-for-3d-printing), [Ultimaker: design for FFF](https://ultimaker.com/learn/design-for-fff-3d-printing-maximize-your-success/), [Wevolver: FDM design tips](https://www.wevolver.com/article/fdm-3d-printing-design-tips-best-practices-and-techniques-for-stronger-prints), [AMFG: top 10 FDM tips](https://www.amfg.ai/post/designing-for-fdm-3d-printing-top-10-tips), [Stratasys FDM design guide](https://www.stratasys.com/siteassets/sdm/content---website-storage/design-guides/dg_sdm_fdm_0725a.pdf), [PrintPal design guide](https://printpal.io/docs/3d-printing-design-guide).
 
+## 2. Joints and tolerances
+
+- Never model male and female parts at the same nominal size. Both at M60x3 gave zero flank clearance and the ring would not screw on. **verified**
+- Put the tolerance on the female part. Leave the male part at its nominal size, so one change fixes one part.
+- Working starting point: female thread major = male nominal + 1 mm (M60x3 male with M61x3 female; M30x2 male with M31x2 female). **verified** by printed coupons.
+- Drive the clearance from a named parameter (`thread_d + 1 mm`), not a typed number.
+- The CAD may auto-narrow the female bore to the thread's minor diameter and warn ("narrowed the 61 mm hole to 57.75 mm"). That is expected. Set the bore sketch dimension to the enlarged size so the thread cuts into material.
+- Where a joint must seal, a slightly loose fit is acceptable if the male thread is wrapped with PTFE (teflon) tape. **verified**
+- Radial clearance alone is not enough. Check flank clearance, because the flanks are what jam.
+- For press fits and snap fits, the same rule applies: tolerance on the receiving part, confirmed with a coupon.
+
+## 3. Export for printing
+
+### Plates
+- Export one file per print job (a "plate") into the project's `export/` folder.
+- Name files `plateN_<contents>_vK.3mf`, for example `plate2_spout_ring_v7.3mf`. Increase `vK` on every change. Never overwrite an earlier export.
+- Never export bodies in their assembled pose. Tilted or overlapping parts import as one object. For each part:
+  1. Copy the body (`solid.move` with `copy: true`), so the model stays untouched.
+  2. Rotate the copy into print orientation with the chosen flat face on Z=0.
+  3. Translate the copies apart so none touch.
+  4. Export only those copies as separate bodies.
+  5. Check each copy's bbox: min Z is 0, and the height matches what you expect.
+- Restore the model afterwards (checkpoint and restore) so no print copies remain in the design.
+- Choose orientation per part using section 1: largest flat face down, overhangs at 45 degrees or less, thread axis vertical.
+
+### Test plates for joining parts
+Any feature that joins another part (threads, press fits, snap fits, sliding fits) gets its own test export before the full parts are printed.
+
+- Put these in `export/tests/`, for example `export/tests/test_ring_thread.3mf`.
+- Include only the small part that mates, cut from the larger object. Do not print the whole object for a fit test.
+- Print at full scale. A uniform scale-down is not a valid fit test, because pitch and clearance shrink with it.
+- Method for each side of the joint:
+  1. Copy the body.
+  2. Intersect the copy with a cylinder or box around the joint (a thread slice of 8 to 12 mm works) using `solid.cylinder` or `solid.box` with `operation: intersect` and `targets`.
+  3. Rotate the slice into print orientation, with the thread axis vertical.
+  4. Place both mating slices on one test plate, apart from each other.
+  5. Export to `export/tests/`.
+- Restore the model afterwards.
+- Print the test plate and confirm the fit before printing the full parts.
+
+## 4. Verify, but do not trust CAD alone
+
+- Run an interference check on the assembled pose (`inspect.clearance`) and rotate one part about its thread axis in 30 degree steps to find the best phase.
+- On the source project the CAD overlap never reached zero (best 48 mm3), yet the printed coupons fit. Treat CAD overlap as a warning to investigate. The physical coupon decides.
+- Check axial travel: the ring must be able to seat fully against its stop.
+- Do not say "this fits" or call a clearance "typical" without a check. State what was and was not verified.
+
 ## 5. Workflow
 
-1. Identify mating pairs and decide which side receives the tolerance.
+1. Identify mating pairs and decide which side takes the tolerance.
 2. Add clearance as named parameters.
-3. Check interference in CAD, rotating through thread phase.
-4. Export one plate per print job and give each file a version suffix (`_v6`). Do not overwrite earlier exports.
-   Never export bodies in their assembled pose: tilted, overlapping parts import as one object. Copy each body, rotate it into print orientation (flat face on Z=0), and space the copies apart before export. Check each copy's bbox min Z is 0.
-5. Print thread coupons first, confirm the fit, then print the full parts.
-6. Record the working clearance values here so the next project starts from them.
+3. Apply the section 1 rules: wall thickness, overhangs, orientation.
+4. Check interference in CAD.
+5. Export joint coupons to `export/tests/`. Print and confirm.
+6. Export the full plates to `export/`.
+7. Record the working clearance values so the next project starts from them.
 
 ## 6. Tool notes
 
@@ -85,5 +104,5 @@ Tool-specific commands live in `tools/`. Read the matching file when you use tha
 
 ## Open items
 
-- Confirm whether the same +1 mm works at other thread sizes and on other printers or filaments.
-- Confirm the full reprint fits the way the coupons did.
+- Confirm the +1 mm clearance on other thread sizes, printers and filaments.
+- Confirm the full reprint fits as the coupons did.
