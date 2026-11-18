@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-skills",
+  "description": "Personal collection of skills and plugins for AI coding agents.",
+  "owner": {
+    "name": "Tech-Dex",
+    "url": "https://github.com/Tech-Dex"
+  },
+  "plugins": [
+    {
+      "name": "3d-print-modeling",
+      "description": "Rules for modeling parts that will be FDM 3D printed: threads and tolerances, print orientation, coupon tests, plate export.",
+      "source": "./plugins/3d-print-modeling",
+      "category": "productivity"
+    }
+  ]
+}
