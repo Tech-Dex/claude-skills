@@ -140,6 +140,7 @@ Print settings depend on the printer, nozzle, and the exact filament brand and l
 For a model with several printed parts that join or move, offer an HTML assembly guide at the end of the task. Do not generate it by default: ask the user first, in one question (yes or no), and skip it if they say no.
 
 - If yes, write one self-contained file to `assembly/` in the project root, next to `export/`. Name it `<project>_assembly_vK.html` and increase `vK` on every change.
+- Use real renders from the CAD through its MCP tools (SolidCraft `screenshot`): assembled, exploded, per step, joint close-ups, and two states of any moving joint. Save them in `assembly/img/<project>_vK/` and restore the model afterwards.
 - The guide shows the part list with plate files, the assembly order, joint details (thread size, handedness, tolerance, PTFE tape), the expected movement (motion, axis, range, stops), and fit checks.
 - Take movement and dimensions from the model. Do not invent them. Write "not verified" where unknown.
 - Full contents, rules and an HTML skeleton are in `references/assembly-guide.md`.
