@@ -4,6 +4,8 @@ Starting points for the Process tab in Bambu Studio (0.4 mm nozzle). Defaults di
 
 ## Presets by goal
 
+The table below assumes PLA or PETG. Speeds, cooling, retraction and wall counts change per material. Apply the adjustments in `process-by-material.md`.
+
 Pick the row closest to the part. All values are proposals to confirm with a print.
 
 | Setting | Standard | Strong functional | Threads and tight fits |

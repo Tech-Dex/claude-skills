@@ -1,6 +1,6 @@
 {
   "name": "3d-print-modeling",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Design-for-FDM rules, joint tolerances, plate export to export/, and joint test plates in export/tests/.",
   "author": {
     "name": "Tech-Dex",
