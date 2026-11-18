@@ -1,6 +1,6 @@
 ---
 name: 3d-print-modeling
-description: Design-for-FDM rules and export workflow for any CAD model meant to be 3D printed. Use when modeling, modifying, or exporting parts for printing: wall thickness, overhangs, orientation, threads and press fits, tolerances, plate export to export/, and test coupons in export/tests/.
+description: "Design-for-FDM rules and export workflow for any CAD model meant to be 3D printed. Use when modeling, modifying, or exporting parts for printing: wall thickness, overhangs, orientation, threads and press fits, tolerances, plate export to export/, and test coupons in export/tests/."
 ---
 
 # 3D-print modeling (FDM)
