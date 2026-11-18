@@ -113,9 +113,12 @@ Any feature that joins another part (threads, press fits, snap fits, sliding fit
 
 ## 7. Material and print settings
 
-Choose a material for each printed part. Details, a profile table for PLA, PETG and TPU on Bambu Lab printers, and the closing summary format are in `references/materials-and-profiles.md`. Read it when you finish a modeling or export task.
+Choose a material for each printed part. Details are in two references. Read both when you finish a modeling or export task:
 
-- At the end of a task, give the user a short print recommendation: material, bed plate and temperatures, layer height, walls, infill, orientation, supports, and which test plate to print first.
+- `references/materials-and-profiles.md`: material choice, PLA, PETG and TPU filament profiles for Bambu Lab printers, and the closing summary format.
+- `references/bambu-process-settings.md`: Bambu Studio Process settings (layer height, wall loops, shells, infill, line widths, quality compensation) with presets by goal.
+
+- At the end of a task, give the user a short print recommendation: material, bed plate and temperatures, Process settings (layer height, wall loops, top and bottom shells, infill, line widths, compensation), orientation, supports, and which test plate to print first.
 - If the material is a poor fit (heat, load, flex, outdoor use, sealing), say so and recommend the replacement from the reference.
 - Ask for the printer model and nozzle once if unknown. Do not assume a printer.
 - Values are starting points from published guides. Say they are unverified until a print confirms them.

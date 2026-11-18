@@ -61,6 +61,8 @@ Supports:    none expected; check the spout bend in the preview
 Check first: print export/tests/ thread coupon before the full parts
 ```
 
+Follow it with the Process block from `bambu-process-settings.md`.
+
 State what is a recommendation and what has been verified on the user's printer. If the material is a poor fit for the part, say so and name the replacement from the table above.
 
 ## Sources
