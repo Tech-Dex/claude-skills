@@ -17,9 +17,21 @@ A Claude Code plugin marketplace with skills for Claude.
 
 Restart Claude Code after installing so the session hook runs.
 
+## Turn it on or off
+
+The rules are on by default. Toggle them with the command below. The choice is saved in `~/.claude/3d-print-modeling/state` and survives restarts.
+
+```
+/print3d on
+/print3d off
+/print3d status
+```
+
+When off, the statusline badge hides and Claude is told not to apply the rules. The skill stays installed, so `/3d-print-modeling:3d-print-modeling` still works by hand.
+
 ## Statusline badge
 
-The plugin writes a flag file at session start. A badge script shows `[3D-PRINT]` while the flag exists. Claude Code plugins cannot set the statusline themselves, so add the script to your `statusLine` command in `~/.claude/settings.json`. The hook copies the scripts to `~/.claude/3d-print-modeling/` on first run, so the path does not change with plugin versions.
+The plugin writes a flag file while the rules are on. A badge script shows `[3D-PRINT]` while the flag exists. Claude Code plugins cannot set the statusline themselves, so add the script to your `statusLine` command in `~/.claude/settings.json`. The hook copies the scripts to `~/.claude/3d-print-modeling/` on first run, so the path does not change with plugin versions.
 
 Windows (PowerShell):
 
