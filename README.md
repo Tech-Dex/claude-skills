@@ -12,7 +12,7 @@ A Claude Code plugin marketplace with skills for Claude.
 
 ```
 /plugin marketplace add Tech-Dex/claude-skills
-/plugin install 3d-print-modeling@claude-skills
+/plugin install 3d-print-modeling@dexter-claude-skills
 ```
 
 Restart Claude Code after installing so the session hook runs.
