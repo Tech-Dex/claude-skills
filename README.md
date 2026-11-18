@@ -1,12 +1,12 @@
 # claude-skills
 
-A Claude Code plugin marketplace with skills for AI coding agents.
+A Claude Code plugin marketplace with skills for Claude.
 
 ## Plugins
 
 | Plugin | What it does |
 |---|---|
-| [`3d-print-modeling`](plugins/3d-print-modeling/skills/3d-print-modeling/SKILL.md) | Rules for modeling parts that will be FDM 3D printed: threads and tolerances, print orientation, coupon tests, plate export. |
+| [`3d-print-modeling`](plugins/3d-print-modeling/skills/3d-print-modeling/SKILL.md) | Design-for-FDM rules, joint tolerances, plate export to `export/`, and joint test plates in `export/tests/`. |
 
 ## Install (Claude Code)
 
@@ -40,10 +40,6 @@ macOS / Linux:
 ```
 
 To combine it with another statusline command, run both in one command and print a space between them.
-
-## Use with other assistants
-
-The skill body is plain markdown with no Claude-specific syntax. For ChatGPT, DeepSeek or other tools, paste `plugins/3d-print-modeling/skills/3d-print-modeling/SKILL.md` into a custom instruction, project, or system prompt. Tool-specific notes live under `tools/` in the skill folder.
 
 ## License
 

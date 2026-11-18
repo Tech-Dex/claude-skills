@@ -1,7 +1,7 @@
 {
   "name": "3d-print-modeling",
-  "version": "0.1.0",
-  "description": "Rules for modeling parts that will be FDM 3D printed: threads and tolerances, print orientation, coupon tests, plate export.",
+  "version": "0.2.0",
+  "description": "Design-for-FDM rules, joint tolerances, plate export to export/, and joint test plates in export/tests/.",
   "author": {
     "name": "Tech-Dex",
     "url": "https://github.com/Tech-Dex"
