@@ -110,6 +110,7 @@ Any feature that joins another part (threads, press fits, snap fits, sliding fit
 6. Export the full plates to `export/`.
 7. Record the working clearance values so the next project starts from them.
 8. Close with a print recommendation (section 7).
+9. If the model has joined or moving parts, offer the optional assembly guide (section 9).
 
 ## 7. Material and print settings
 
@@ -134,7 +135,16 @@ Print settings depend on the printer, nozzle, and the exact filament brand and l
 - Calibrated values from the user's own prints (thread clearance, elephant foot, XY compensation) override every number in the references.
 - Update the profile when the user changes printer, nozzle or filament. Never guess a brand.
 
-## 9. Tool notes
+## 9. Assembly guide (optional)
+
+For a model with several printed parts that join or move, offer an HTML assembly guide at the end of the task. Do not generate it by default: ask the user first, in one question (yes or no), and skip it if they say no.
+
+- If yes, write one self-contained file to `assembly/` in the project root, next to `export/`. Name it `<project>_assembly_vK.html` and increase `vK` on every change.
+- The guide shows the part list with plate files, the assembly order, joint details (thread size, handedness, tolerance, PTFE tape), the expected movement (motion, axis, range, stops), and fit checks.
+- Take movement and dimensions from the model. Do not invent them. Write "not verified" where unknown.
+- Full contents, rules and an HTML skeleton are in `references/assembly-guide.md`.
+
+## 10. Tool notes
 
 Tool-specific commands live in `tools/`. Read the matching file when you use that CAD app:
 
