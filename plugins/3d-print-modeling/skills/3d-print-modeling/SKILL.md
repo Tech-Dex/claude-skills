@@ -121,10 +121,20 @@ Choose a material for each printed part. Details are in three references. Read t
 
 - At the end of a task, give the user a short print recommendation: material, bed plate and temperatures, Process settings adjusted for the chosen material (layer height, wall loops, top and bottom shells, infill, line widths, speeds, cooling, retraction, compensation), orientation, supports, and which test plate to print first.
 - If the material is a poor fit (heat, load, flex, outdoor use, sealing), say so and recommend the replacement from the reference.
-- Ask for the printer model and nozzle once if unknown. Do not assume a printer.
+- Use the saved user profile (section 8). Do not assume a printer or a filament brand.
 - Values are starting points from published guides. Say they are unverified until a print confirms them.
 
-## 8. Tool notes
+## 8. Know the user's setup
+
+Print settings depend on the printer, nozzle, and the exact filament brand and line (for example Sunlu, Bambu Lab, or another maker). The user's setup is saved in `~/.claude/3d-print-modeling/profile.md` (`$CLAUDE_CONFIG_DIR/3d-print-modeling/profile.md` if that variable is set). The template and rules are in `references/user-profile-template.md`.
+
+- Before giving any print recommendation, read the profile file.
+- If it is missing, ask the user once (printer model, nozzle, enclosure, AMS, slicer, build plate, and the brand and line of each filament they use), then save it. Use one question tool call with all the fields, not a series of questions.
+- Save links the user gives you for their filaments, and look them up when you recommend settings. If a filament has no link, search for the maker's official datasheet or settings page, show the link, and save it once the user agrees.
+- Calibrated values from the user's own prints (thread clearance, elephant foot, XY compensation) override every number in the references.
+- Update the profile when the user changes printer, nozzle or filament. Never guess a brand.
+
+## 9. Tool notes
 
 Tool-specific commands live in `tools/`. Read the matching file when you use that CAD app:
 

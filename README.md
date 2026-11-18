@@ -6,7 +6,7 @@ A Claude Code plugin marketplace with skills for Claude.
 
 | Plugin | What it does |
 |---|---|
-| [`3d-print-modeling`](plugins/3d-print-modeling/skills/3d-print-modeling/SKILL.md) | Design-for-FDM rules, joint tolerances, plate export to `export/`, joint test plates in `export/tests/`, material guidance, and Bambu Lab filament and Process-setting recommendations, tuned per material. |
+| [`3d-print-modeling`](plugins/3d-print-modeling/skills/3d-print-modeling/SKILL.md) | Design-for-FDM rules, joint tolerances, plate export to `export/`, joint test plates in `export/tests/`, material guidance, and Bambu Lab filament and Process-setting recommendations, tuned per material and per the user's saved printer and filament profile. |
 
 ## Install (Claude Code)
 
