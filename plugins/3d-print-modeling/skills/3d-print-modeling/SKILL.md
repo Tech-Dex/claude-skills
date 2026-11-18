@@ -109,8 +109,18 @@ Any feature that joins another part (threads, press fits, snap fits, sliding fit
 5. Export joint coupons to `export/tests/`. Print and confirm.
 6. Export the full plates to `export/`.
 7. Record the working clearance values so the next project starts from them.
+8. Close with a print recommendation (section 7).
 
-## 7. Tool notes
+## 7. Material and print settings
+
+Choose a material for each printed part. Details, a profile table for PLA, PETG and TPU on Bambu Lab printers, and the closing summary format are in `references/materials-and-profiles.md`. Read it when you finish a modeling or export task.
+
+- At the end of a task, give the user a short print recommendation: material, bed plate and temperatures, layer height, walls, infill, orientation, supports, and which test plate to print first.
+- If the material is a poor fit (heat, load, flex, outdoor use, sealing), say so and recommend the replacement from the reference.
+- Ask for the printer model and nozzle once if unknown. Do not assume a printer.
+- Values are starting points from published guides. Say they are unverified until a print confirms them.
+
+## 8. Tool notes
 
 Tool-specific commands live in `tools/`. Read the matching file when you use that CAD app:
 
