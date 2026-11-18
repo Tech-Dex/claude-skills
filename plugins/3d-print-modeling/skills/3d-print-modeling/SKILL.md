@@ -28,7 +28,7 @@ Apply this whenever you design, change, or export a part that will be printed. D
 - Fillets on the first layers can warp. Prefer a chamfer on the bed side. Fillets elsewhere are fine for stress relief but optional in FDM.
 
 ### Holes
-- Printed holes come out slightly small. Add clearance to the receiving hole and confirm with a test coupon (section 3). No source gives a universal value, so record the value that works on the user's printer.
+- Printed holes come out slightly small. Add clearance to the receiving hole and confirm with a test coupon (section 4). No source gives a universal value, so record the value that works on the user's printer.
 
 ### Threads
 - Printed threads work best with rounded roots and crests, not sharp ones.
@@ -39,7 +39,21 @@ Apply this whenever you design, change, or export a part that will be printed. D
 
 Sources: [Onshape: top 5 design tips](https://www.onshape.com/en/resource-center/tech-tips/top-5-design-tips-for-3d-printing), [Ultimaker: design for FFF](https://ultimaker.com/learn/design-for-fff-3d-printing-maximize-your-success/), [Wevolver: FDM design tips](https://www.wevolver.com/article/fdm-3d-printing-design-tips-best-practices-and-techniques-for-stronger-prints), [AMFG: top 10 FDM tips](https://www.amfg.ai/post/designing-for-fdm-3d-printing-top-10-tips), [Stratasys FDM design guide](https://www.stratasys.com/siteassets/sdm/content---website-storage/design-guides/dg_sdm_fdm_0725a.pdf), [PrintPal design guide](https://printpal.io/docs/3d-printing-design-guide).
 
-## 2. Joints and tolerances
+## 2. Model parametrically
+
+Build every part from named parameters so it can be resized and reused. A part that only exists at one size has to be remodeled for the next project.
+
+- Make each important size a named parameter: overall dimensions, wall thickness, thread diameter, clearance, lengths. In the source project: `mouth_d`, `spout_od`, `wall`, `thread_d`, `tip_d`, `ring_od`.
+- Express related sizes as expressions of those parameters, not typed numbers: inner diameter `spout_od - 2*wall`, female thread `thread_d + 1 mm`, extension body `0.75 * spout_od`. Changing one parameter then updates everything that depends on it.
+- Put the printing clearance in a parameter too, so one edit retunes every mating part.
+- Drive sketch dimensions from parameters or from other geometry (distance to the origin or to an edge), and fully constrain every sketch (0 degrees of freedom).
+- Pick edges and faces by position so they follow the geometry when sizes change. Do not rely on fixed coordinates that break after a resize.
+- Name every feature and parameter clearly (`thread_d`, not `d29`). Unnamed auto parameters are hard to reuse.
+- Avoid typed constants in features. On the source project a few dimensions were plain numbers (`d3 = 200`, `d15 = 33.4`) and would not follow a resize.
+- Test the parametric behavior: change a key parameter (for example `check_parameters` with a new `wall` or `thread_d`), confirm the design rebuilds without errors and the volume and bounding box change as expected, then set it back.
+- Keep thread and clearance rules tied to the parameter they depend on, so a resized part keeps a working fit (section 3).
+
+## 3. Joints and tolerances
 
 - Never model male and female parts at the same nominal size. Both at M60x3 gave zero flank clearance and the ring would not screw on. **verified**
 - Put the tolerance on the female part. Leave the male part at its nominal size, so one change fixes one part.
@@ -50,7 +64,7 @@ Sources: [Onshape: top 5 design tips](https://www.onshape.com/en/resource-center
 - Radial clearance alone is not enough. Check flank clearance, because the flanks are what jam.
 - For press fits and snap fits, the same rule applies: tolerance on the receiving part, confirmed with a coupon.
 
-## 3. Export for printing
+## 4. Export for printing
 
 ### Plates
 - Export one file per print job (a "plate") into the project's `export/` folder.
@@ -79,14 +93,14 @@ Any feature that joins another part (threads, press fits, snap fits, sliding fit
 - Restore the model afterwards.
 - Print the test plate and confirm the fit before printing the full parts.
 
-## 4. Verify, but do not trust CAD alone
+## 5. Verify, but do not trust CAD alone
 
 - Run an interference check on the assembled pose (`inspect.clearance`) and rotate one part about its thread axis in 30 degree steps to find the best phase.
 - On the source project the CAD overlap never reached zero (best 48 mm3), yet the printed coupons fit. Treat CAD overlap as a warning to investigate. The physical coupon decides.
 - Check axial travel: the ring must be able to seat fully against its stop.
 - Do not say "this fits" or call a clearance "typical" without a check. State what was and was not verified.
 
-## 5. Workflow
+## 6. Workflow
 
 1. Identify mating pairs and decide which side takes the tolerance.
 2. Add clearance as named parameters.
@@ -96,7 +110,7 @@ Any feature that joins another part (threads, press fits, snap fits, sliding fit
 6. Export the full plates to `export/`.
 7. Record the working clearance values so the next project starts from them.
 
-## 6. Tool notes
+## 7. Tool notes
 
 Tool-specific commands live in `tools/`. Read the matching file when you use that CAD app:
 
