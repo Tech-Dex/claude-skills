@@ -64,6 +64,14 @@ Build every part from named parameters so it can be resized and reused. A part t
 - Radial clearance alone is not enough. Check flank clearance, because the flanks are what jam.
 - For press fits and snap fits, the same rule applies: tolerance on the receiving part, confirmed with a coupon.
 
+### Clamped joints (a part held between two others)
+- Do not model the clamping stack with a built-in gap. On the funnel the ring recess was `flange_t + 0.3 mm` deep, so the spout flange had 0.3 mm of axial play and the spout rattled once the ring hit its thread stop. **verified**
+- Measure the axial slack in the CAD: move a copy of the clamping part along the thread axis and find where it first touches the held part. A conical seat gives a gap of 0.707 mm per millimetre of axial movement.
+- Design the stack with a small interference, not a gap. Make the held part about 0.2 mm taller than the pocket, so the ring clamps it before the thread runs out. Printed parts also lose some height, so do not rely on a zero gap. Confirm with a print.
+- Put that interference in its own parameter (for example `flange_extra`) on the part to change, so the other part stays unchanged and the value is easy to retune.
+- Check which parameters drive both parts. Changing a shared parameter such as `flange_t` also changed the ring pocket, which cancels the fix.
+
+
 ## 4. Export for printing
 
 ### Plates
